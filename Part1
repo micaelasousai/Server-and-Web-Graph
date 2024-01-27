@@ -11,6 +11,7 @@ public List<WebPage> P;
 private WebServer[] V;
 private bool[,] E;
 private int NumServers;
+private int MaxNumServers;
 ...
 // 2 marks
 // Create an empty server graph
