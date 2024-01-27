@@ -99,11 +99,7 @@ public bool AddWebPage(WebPage w, string name)
 // Remove the server with the given name by assigning its connections
 // and webpages to the other server
 // Return true if successful; otherwise return false
-public bool RemoveServer(string name, string other) ...
-
-// 3 marks (Bonus)
-// Remove the webpage from the server with the given name
-// Return true if successful; otherwise return false
+public bool RemoveServer(string name, string other)
 {
 	int i, j;
 	if ((i = FindServer(name)) > -1)
@@ -119,6 +115,10 @@ public bool RemoveServer(string name, string other) ...
 	return false;
 	}
 }
+
+// 3 marks (Bonus)
+// Remove the webpage from the server with the given name
+// Return true if successful; otherwise return false
 public bool RemoveWebPage(string webpage, string name) ...
 
 // 3 marks
@@ -145,17 +145,113 @@ public string[] CriticalServers( ) ...
 // 6 marks
 // Return the shortest path from one server to another
 // Hint: Use a variation of the breadth-first search
+// Source: https://www.geeksforgeeks.org/shortest-path-unweighted-graph/
 public int ShortestPath(string from, string to)
+{
+	// predecessor [i] array stores predecessor of i
+	// distance array stores distance of i from s
+	int[] pred = new int[NumServers];
+	int[] dist = new int[NumServers];
 
-// 4 marks
-// Print the name and connections of each server as well as
-// the names of the webpages it hosts
+	// TO COMPLETE
+	// Call method BFS
+	// Check if vertices are connected
+	// Output error message if not connected
+	if (BFS(E, from, to, NumServers, pred, dist) == false)
+	{
+		Console.WriteLine("Given source and destination are not connected");
+		// IS RETURNING -1 OKAY?
+		return -1;
+	}
+
+	// Create a list to store the path
+	List<int> path = new List<int>();
+	int crawl = dest;
+	path.Add(crawl);
+
+	while(pred[crawl] != -1)
+	{
+		path.Add(pred[crawl]);
+		crawl = pred[crawl];
+	}
+
+	// Print distance
+	// REVIEW THIS!
+	// MIGHT HAVE TO JUST RETURN A NUMBER, INTEGER
+	// Console.WriteLine("Shortest path from server " + from + " to server " + to + " is: " + dist[to]);
+
+	// Print path
+	// Console.WriteLine("Path is: ");
+
+	//for(int i = path.Count - 1; i >= 0; i--)
+	//{
+	//	Console.Write(path[i] + " ");
+	//}
+
+	// Return statement
+	return dist[to];
+
+	// Modified version of BFS that stores predecessor of each vertex in array pred and its distance from source in array dist
+	// Might have to pass variables as parameters
+	private static bool BFS(bool[,] E, int from, int to, int NumServers, int[] pred, int[]dist)
+	{
+		// a queue to maintain queue of vertices who adjancency matrix is to be scanned as per normal BFS algorithm using List of int type
+		List<int> queue = new List<int>();
+
+		// bool array visited
+		// stores information of whether or not vertex i is reached at least once in the BFS
+		bool []visited = new bool[NumServers];
+
+		// Set all vertices as unvisited, so visited[i] for all i is false
+		// no path constructed yet, so dist[i] set to infinity 
+		for (int i = 0; i < v; i++)
+		{
+			visited[i] = false;
+			dist[i] = int.MaxValue;
+			pred[i] = -1;
+		}
+
+		// now source is first to be visited and distance from source to itself should be 0
+		visited[from] = true;
+		dist[from] = 0;
+		queue.Add(from);
+
+		// BFS Algorithm
+		while (queue.Count != 0)
+		{
+			int u = queue[0];
+			queue.RemoveAt(0);
+
+			for (int i = 0; i < E[u].Count; i++)
+			{
+				if (visited[E[u, i]] == false)
+				{
+					visited[E[u, i]] = true;
+					dist[E[u, i]] = dist[u] + 1;
+					pred[E[u, i]] = u;
+					queue.Add(E[u, i]);
+
+					// stopping condition (when we find our destination)
+					if (E[u, i] == dest)
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+}
+
+// Method to print all servers
+// To be called in Print graph method
 public void PrintServers()
 {
 	int i;
 	for (i = 0; i < NumServers; i++)
 		Console.WriteLine(V[i]);
 }
+
+// Method to print all connections
+// To be called in Print graph method
 public void PrintConnections()
 {
 	int i, j;
@@ -164,6 +260,15 @@ public void PrintConnections()
 			if (E[i, j] > -1)
 				Console.WriteLine("(" + V[i] + "," + V[j] + "," + E[i, j] + ")");
 }
+
+// 4 marks
+// Print the name and connections of each server as well as
+// the names of the webpages it hosts
+
+////////////////////////////////
+// MISSING PRINT WEBPAGES!!
+////////////////////////////////
+
 public void PrintGraph( ) 
 {
 	PrintServers();
