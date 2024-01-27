@@ -138,6 +138,22 @@ public int ShortestPath(string from, string to)
 // 4 marks
 // Print the name and connections of each server as well as
 // the names of the webpages it hosts
-public void PrintGraph( ) ...
-...
+public void PrintServers()
+{
+	int i;
+	for (i = 0; i < NumServers; i++)
+		Console.WriteLine(V[i]);
+}
+public void PrintConnections()
+{
+	int i, j;
+	for (i = 0; i < NumServers; i++)
+		for (j = 0; j < NumServers; j++)
+			if (E[i, j] > -1)
+				Console.WriteLine("(" + V[i] + "," + V[j] + "," + E[i, j] + ")");
+}
+public void PrintGraph( ) 
+{
+
+	
 }
