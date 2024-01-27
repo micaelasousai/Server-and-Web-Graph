@@ -18,8 +18,17 @@ private int MaxNumServers;
 public ServerGraph( ) ...
 // 2 marks
 // Return the index of the server with the given name; otherwise return -1
-private int FindServer(string name) ...
+private int FindServer(string name) 
 // 3 marks
+{
+    int i;
+    for (i = 0; i < NumServers; i++)
+    {  
+        if (S[i].Equals(name))
+            return i;
+    }
+    return -1;
+}
 // Double the capacity of the server graph with the respect to web servers
 private void DoubleCapacity( ) {
 	MaxNumServers = MaxNumServers * 2;
