@@ -166,6 +166,6 @@ public void PrintConnections()
 }
 public void PrintGraph( ) 
 {
-
-	
+	PrintServers();
+	PrintConnections();
 }
