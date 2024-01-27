@@ -21,7 +21,9 @@ public ServerGraph( ) ...
 private int FindServer(string name) ...
 // 3 marks
 // Double the capacity of the server graph with the respect to web servers
-private void DoubleCapacity( ) ...
+private void DoubleCapacity( ) {
+	MaxNumServers = MaxNumServers * 2;
+}
 // 3 marks
 // Add a server with the given name and connect it to the other server
 // Return true if successful; otherwise return false
