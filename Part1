@@ -8,14 +8,21 @@ public string Name;
 public List<WebPage> P;
 ...
 }
-private WebServer[] V;
-private bool[,] E;
-private int NumServers;
-private int MaxNumServers;
+private WebServer[] V {set; get; } 
+private bool[,] E {set; get; } 
+private int NumServers {set; get; } 
+private int MaxNumServers {set; get; } 
 ...
 // 2 marks
 // Create an empty server graph
-public ServerGraph( ) ...
+public ServerGraph(int maxNumServers) 
+ {
+	NumServers= 0;
+        MaxNumServers = maxNumServers;
+        V = new WebServer[maxNumServers];
+        E = new bool[maxNumServers, maxNumServers];
+} 
+
 // 2 marks
 // Return the index of the server with the given name; otherwise return -1
 private int FindServer(string name) 
@@ -24,7 +31,7 @@ private int FindServer(string name)
     int i;
     for (i = 0; i < NumServers; i++)
     {  
-        if (S[i].Equals(name))
+        if (V[i].Equals(name))
             return i;
     }
     return -1;
