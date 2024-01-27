@@ -56,6 +56,21 @@ public bool RemoveServer(string name, string other) ...
 // 3 marks (Bonus)
 // Remove the webpage from the server with the given name
 // Return true if successful; otherwise return false
+{
+	int i, j;
+	if ((i = FindServer(name)) > -1)
+	{
+		NumServers--;
+		V[i] = V[NumServers];
+		for (j = NumServers; j >= 0; j--)
+		{
+			E[j, i] = E[j, NumServers];
+			E[i, j] = E[NumServers, j];
+			return true;	
+		}
+	return false;
+	}
+}
 public bool RemoveWebPage(string webpage, string name) ...
 // 3 marks
 // Add a connection from one server to another
