@@ -81,7 +81,19 @@ public bool AddServer(string name, string other) {
 // 3 marks
 // Add a webpage to the server with the given name
 // Return true if successful; otherwise return false
-public bool AddWebPage(WebPage w, string name) ...
+public bool AddWebPage(WebPage w, string name) 
+ {
+        //have a list for webpages to be stored
+        //List<WebPage> P = new List<WebPage>(w);  //idk if w should be in brackets https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.add?view=net-8.0
+        //bool WebPageAdded = P.Any(); //Any checks if list contains an element https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.any?view=net-8.0&redirectedfrom=MSDN#overloads
+ 
+        //P.Add(new WebPage(name));
+
+        //if (WebPageAdded == true)
+            //return true;
+        //else
+            //return false;
+    }
 
 // 4 marks
 // Remove the server with the given name by assigning its connections
