@@ -75,7 +75,28 @@ public bool AddPage(string name, string host, ServerGraph S) ...
 // Remove the webpage with the given name, including the hyperlinks
 // from and to the webpage
 // Return true if successful; otherwise return false
-public bool RemovePage (string name, ServerGraph S) ...
+public bool RemovePage (string name, ServerGraph S) {
+	int i, j, k;
+	if ((i = FindPage(name)) > -1)
+	{
+		for (j = 0; j < V.Count; j++)
+		{
+			for (k = 0; k < V[j].E.Count; k++)
+				if (V[j].E[k].AdjVertex.Name.Equals(name)) // Incident edge
+				{
+					V[j].E.RemoveAt(k);
+					break; // Since there are no duplicate edges
+				}
+		}
+		V.RemoveAt(i);
+	}
+
+	// Remove webpage from the list of webpages of host server
+	// TO COMPLETE!!!
+
+	// Return true or false if operation is successful
+	// TO COMPLETE!!
+}
 
 // 3 marks
 // Add a hyperlink from one webpage to another
