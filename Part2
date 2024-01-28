@@ -69,7 +69,16 @@ private int FindPage(string name) {
 // 4 marks
 // Add a webpage with the given name and store it on the host server
 // Return true if successful; otherwise return false
-public bool AddPage(string name, string host, ServerGraph S) ...
+public bool AddPage(string name, string host, ServerGraph S)
+    {
+        if (FindPage(name) == -1)
+        {
+            WebPage<P> page = new WebPage<P>(name);
+            V.Add(page);
+            return true;
+        }
+            return false;  
+    }
 
 // 8 marks
 // Remove the webpage with the given name, including the hyperlinks
