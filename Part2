@@ -1,3 +1,16 @@
+// Create a class for Edge
+public class Edge<T>
+    {
+        public WebPage<T> AdjVertex { get; set; }
+        public int Cost { get; set; }
+
+        public Edge(Webpage<T> webpage, int cost = -1)
+        {
+            AdjVertex = webpage;
+            Cost = 1;
+        }
+    }
+
 // 5 marks
 public class WebPage
 {
@@ -13,7 +26,19 @@ public WebPage(string name, string host) {
 	E = new List<WebPage>();
 }
 
-public int FindLink(string name) ...
+// Find link method
+// Returns the index of the given adjacent vertex in E; otherwise returns -1
+// Time complexity: O(n) where n is the number of vertices
+public int FindLink(string name) {
+	int i;
+	for (i = 0; i < E.Count; i++)
+	{
+		if (E[i].AdjVertex.Name.Equals(name))
+			return i;
+	}
+	return -1;
+}
+
 ...
 }
 public class WebGraph
