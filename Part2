@@ -29,7 +29,15 @@ public WebGraph( ) {
 
 // 2 marks
 // Return the index of the webpage with the given name; otherwise return -1
-private int FindPage(string name) ...
+private int FindPage(string name) {
+	int i;
+	for (i = 0; i < V.Count; i++)
+	{
+		if (V[i].Name.Equals(name))
+			return i;
+	}
+	return -1;
+}
 
 // 4 marks
 // Add a webpage with the given name and store it on the host server
