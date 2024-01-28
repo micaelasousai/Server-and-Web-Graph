@@ -5,7 +5,14 @@ public string Name {get; set;}
 public string Server {get; set;}
 public List<WebPage> E {get; set;}
 ...
-public WebPage(string name, string host) ...
+
+// Constructor for Web page
+public WebPage(string name, string host) {
+	Name = name;
+	Server = host;
+	E = new List<WebPage>();
+}
+
 public int FindLink(string name) ...
 ...
 }
