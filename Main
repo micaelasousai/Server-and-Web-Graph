@@ -13,24 +13,44 @@ using System;
 
 public static class Assignment1
 {
-  public static void Main()
+	public static void Main()
     {
-       // Instantiate a server graph and a web graph.
+		// Declare variables
+		int i, j;
+		
+		// Instantiate a server graph and a web graph.
+		ServerGraph<char> S = new ServerGraph<char>(7);
+		WebGraph<char> W = new WebGraph<char>();
+		
+		// Add a number of servers.
+		// Use a for loop to add server to the server graph
+		for (i = 0; i < 7; i++)
+			S.AddServer((char)(i + 'a'));
+		
+		// Print all the servers
+		S.PrintServers();
+	
+        // Add additional connections between servers.
+		// Use two for loop to get the 2 servers to be connected
+		for (i = 0; i < 7; i += 2)
+			for (j = 0; j < 7; j += 3)
+			{
+				S.AddConnection((char)(i + 'a'), (char)(j + 'a'));
+			}
 
-      // Add a number of servers.
+		H.PrintConnections();
+		Console.ReadKey();
 
-      // Add additional connections between servers.
+        // Add a number of webpages to various servers.
 
-      // Add a number of webpages to various servers.
+    	// Add and remove hyperlinks between the webpages.
 
-      // Add and remove hyperlinks between the webpages.
+    	// Remove both webpages and servers.
 
-      // Remove both webpages and servers.
+        // Determine the critical servers of the remaining Internet.
 
-      // Determine the critical servers of the remaining Internet.
+        // Calculate the average shortest distance to the hyperlinks of a given webpage.
 
-      // Calculate the average shortest distance to the hyperlinks of a given webpage.
-
-      Console.ReadLine();
+		Console.ReadLine();
     }
 }
