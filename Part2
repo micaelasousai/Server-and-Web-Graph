@@ -110,7 +110,25 @@ public bool RemovePage (string name, ServerGraph S) {
 // 3 marks
 // Add a hyperlink from one webpage to another
 // Return true if successful; otherwise return false
-public bool AddLink (string from, string to) ...
+public bool AddLink (string from, string to) 
+{
+	int i,j;
+	int k = 0;
+	Edge<T> e;
+
+	// Do the vertices exist?
+	if ((i = FindPage(from)) > -1 && (j = FindPage(to) > -1)
+	{
+		// Does the edge not already exist?
+		if (V[i].FindLink(to) == -1)
+		{
+			e = new Edge<T>(V[j], k);
+			V[i].E.Add(e);
+			return true;
+		}
+	}
+	return false;
+}
 
 // 3 marks
 // Remove a hyperlink from one webpage to another
