@@ -115,7 +115,15 @@ public bool AddLink (string from, string to) ...
 // 3 marks
 // Remove a hyperlink from one webpage to another
 // Return true if successful; otherwise return false
-public bool RemoveLink (string from, string to) ...
+public bool RemoveLink (string from, string to) {
+	int i, j;
+	if ((i = FindPage(from)) > -1 && (j = V[i].FindPage(to)) > -1)
+	{
+		V[i].E.RemoveAt(j);
+		return true;
+	}
+	return false;
+}
 
 // 6 marks
 // Return the average length of the shortest paths from the webpage with
