@@ -23,6 +23,8 @@ public List<WebPage> E {get; set;}
 public WebPage(string name, string host) {
 	Name = name;
 	Server = host;
+	// Should we keep this?
+	Visited = false;
 	E = new List<WebPage>();
 }
 
