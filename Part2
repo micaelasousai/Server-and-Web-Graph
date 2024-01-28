@@ -23,7 +23,9 @@ private List<WebPage> P;
 
 // 2 marks
 // Create an empty WebGraph
-public WebGraph( ) ...
+public WebGraph( ) {
+	V = new List<WebPage>();
+}
 
 // 2 marks
 // Return the index of the webpage with the given name; otherwise return -1
