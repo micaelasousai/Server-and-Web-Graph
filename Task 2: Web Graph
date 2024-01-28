@@ -158,7 +158,48 @@ public bool RemoveLink (string from, string to) {
 // Return the average length of the shortest paths from the webpage with
 // given name to each of its hyperlinks
 // Hint: Use the method ShortestPath in the class ServerGraph
-public float AvgShortestPaths(string name, ServerGraph S) ...
+
+///////////////////////////
+//note: this isn't how BP recommended us to do it --> will change the AvgShortestPaths afterwards
+//////////////////////////
+public float AvgShortestPaths(string name, ServerGraph S, int v, int[] distance, int[] pred, int destination)
+    {
+        //reference for bfs is from: https://www.geeksforgeeks.org/shortest-path-unweighted-graph/
+        bool[] visited = new bool[v];   //checks in vertex is reached at least once
+        
+        for (int i = 0; i < v; i++)
+        {
+            visited[i] = false;
+            distance[i] = int.MaxValue;
+            pred[i] = -1;
+        }
+
+        visited[S] = true;
+        distance[S] = 0;
+        P.Add(S);
+
+        // the breadth first search
+        while (P.Count != 0)
+        {
+            int a = P[0];
+            P.RemoveAt(0);
+
+            for (int i = 0; i < S[a].Count; i++)
+            {
+                if (visited[S[a][i]] == false)
+                {
+                    visited[S[a][i]] = true;
+                    distance[(int)S[a][i]] = distance[a] + 1;
+                    pred[S[a][i]] = a;
+                    P.Add((int)S[a][i]);
+
+                    if (S[a][i] == destination)
+                        return 1;
+                }
+            }
+        }
+        return -1;
+        
 
 // PrintPages
 // Prints out all vertices of a graph
