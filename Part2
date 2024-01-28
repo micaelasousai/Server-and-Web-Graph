@@ -149,8 +149,34 @@ public bool RemoveLink (string from, string to) {
 // Hint: Use the method ShortestPath in the class ServerGraph
 public float AvgShortestPaths(string name, ServerGraph S) ...
 
+// PrintPages
+// Prints out all vertices of a graph
+// Time complexity: O(n)
+// To be called inside the PrintGraph method
+public void PrintPages()
+{
+	for (int i = 0; i < V.Count; i++)
+		Console.WriteLine(V[i].Name);
+	Console.ReadLine();
+}
+
+// PrintLinks
+// Prints out all edges of the graph
+// Time complexity: O(m)
+// To be called inside the PrintGraph method
+public void PrintLinks()
+{
+	int i, j;
+	for (i = 0; i < V.Count; i++)
+		for (j = 0; j < V[i].E.Count; j++)
+			Console.WriteLine("(" + V[i].Name + "," + V[i].E[j].AdjVertex.Name + ")");
+    Console.ReadLine();
+}
+
 // 3 marks
 // Print the name and hyperlinks of each webpage
-public void PrintGraph( ) ...
-...
+public void PrintGraph( ) {
+	PrintPages();
+	PrintLinks();
+}
 }
