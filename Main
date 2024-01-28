@@ -15,6 +15,21 @@ public static class Assignment1
 {
   public static void Main()
     {
+       // Instantiate a server graph and a web graph.
+
+      // Add a number of servers.
+
+      // Add additional connections between servers.
+
+      // Add a number of webpages to various servers.
+
+      // Add and remove hyperlinks between the webpages.
+
+      // Remove both webpages and servers.
+
+      // Determine the critical servers of the remaining Internet.
+
+      // Calculate the average shortest distance to the hyperlinks of a given webpage.
 
       Console.ReadLine();
     }
