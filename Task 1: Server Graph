@@ -162,102 +162,76 @@ public string[] CriticalServers(int i, bool[] visited) ...
 		if (!visited[j] && E[i,j] > -1)
 			CriticalServers(j, visited);
 }
+
 // 6 marks
 // Return the shortest path from one server to another
 // Hint: Use a variation of the breadth-first search
-// Source: https://www.geeksforgeeks.org/shortest-path-unweighted-graph/
 public int ShortestPath(string from, string to)
 {
-	// predecessor [i] array stores predecessor of i
-	// distance array stores distance of i from s
-	int[] pred = new int[NumServers];
+	// declare variables
+	int i;
+	int k;
+	
+	// get index of the from server
+	for (x = 0; x < V.GetLength(); x++)
+	{
+		if (V[x] == from)
+			i = x;
+	}
+	
+	// get index of the from server
+	for (x = 0; x < V.GetLength(); x++)
+	{
+		if (V[x] == to)
+			k = x;
+	}
+
+	bool[] visited = new bool[NumServers];
+	// distance array stores the distance
 	int[] dist = new int[NumServers];
 
-	// TO COMPLETE
-	// Call method BFS
-	// Check if vertices are connected
-	// Output error message if not connected
-	if (BFS(E, from, to, NumServers, pred, dist) == false)
+	for (i = 0; i < NumVertices; i++)
+        visited[i] = false;               // Set all vertices as unvisited
+
+    for (i = 0; i < NumVertices; i++)
+        if (!visited[i])                  // (Re)start with vertex i
+        {
+            BreadthFirstSearch(i, visited);
+            Console.WriteLine();
+        }
+
+	// Modified version of BFS stores distance from one vertex to the other in array dist
+	private static bool BFS(int i, int k, bool[] visited)
 	{
-		Console.WriteLine("Given source and destination are not connected");
-		// IS RETURNING -1 OKAY?
-		return -1;
-	}
+		// declare the variables
+		int j;
 
-	// Create a list to store the path
-	List<int> path = new List<int>();
-	int crawl = dest;
-	path.Add(crawl);
+		Queue<int> Q = new Queue<int>();
+		Q.Enqueue(i); 		//  Mark vertex as visited when placed in the queue
+		visited[i] = true;
 
-	while(pred[crawl] != -1)
-	{
-		path.Add(pred[crawl]);
-		crawl = pred[crawl];
-	}
-
-	// Print distance
-	// REVIEW THIS!
-	// MIGHT HAVE TO JUST RETURN A NUMBER, INTEGER
-	// Console.WriteLine("Shortest path from server " + from + " to server " + to + " is: " + dist[to]);
-
-	// Print path
-	// Console.WriteLine("Path is: ");
-
-	//for(int i = path.Count - 1; i >= 0; i--)
-	//{
-	//	Console.Write(path[i] + " ");
-	//}
-
-	// Return statement
-	return dist[to];
-
-	// Modified version of BFS that stores predecessor of each vertex in array pred and its distance from source in array dist
-	// Might have to pass variables as parameters
-	private static bool BFS(bool[,] E, int from, int to, int NumServers, int[] pred, int[]dist)
-	{
-		// a queue to maintain queue of vertices who adjancency matrix is to be scanned as per normal BFS algorithm using List of int type
-		List<int> queue = new List<int>();
-
-		// bool array visited
-		// stores information of whether or not vertex i is reached at least once in the BFS
-		bool []visited = new bool[NumServers];
-
-		// Set all vertices as unvisited, so visited[i] for all i is false
-		// no path constructed yet, so dist[i] set to infinity 
-		for (int i = 0; i < v; i++)
+		while (Q.Count != 0)
 		{
-			visited[i] = false;
-			dist[i] = int.MaxValue;
-			pred[i] = -1;
-		}
+			i = Q.Dequeue();		
 
-		// now source is first to be visited and distance from source to itself should be 0
-		visited[from] = true;
-		dist[from] = 0;
-		queue.Add(from);
-
-		// BFS Algorithm
-		while (queue.Count != 0)
-		{
-			int u = queue[0];
-			queue.RemoveAt(0);
-
-			for (int i = 0; i < E[u].Count; i++)
-			{
-				if (visited[E[u, i]] == false)
+			for (j = i; j < NumServers; j++)	// Enqueue unvisited adjacent vertices
+				if (!visited[j] && E[i, j] > -1)
 				{
-					visited[E[u, i]] = true;
-					dist[E[u, i]] = dist[u] + 1;
-					pred[E[u, i]] = u;
-					queue.Add(E[u, i]);
+					// Distance of i is equal to the distance of the parent + 1
+					dist[j] = dist[j - 1] + 1;
 
-					// stopping condition (when we find our destination)
-					if (E[u, i] == dest)
-						return true;
+					// if j != k then execute the following two lines
+					if (j != k )
+					{
+						Q.Enqueue(j);
+						visisted[j] = true;		// Mark vertex as visited
+					}
+					else
+					{
+						return dist[j];
+					}
 				}
-			}
 		}
-		return false;
 	}
 }
 
