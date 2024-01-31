@@ -160,7 +160,7 @@ public string[] CriticalServers(int i, bool[] visited) ...
 
 	for (j = 0; j < NumServers; j++)
 		if (!visited[j] && E[i,j] > -1)
-			DepthFirstSearch(j, visited);
+			CriticalServers(j, visited);
 }
 // 6 marks
 // Return the shortest path from one server to another
