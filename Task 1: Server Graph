@@ -150,8 +150,18 @@ public bool AddConnection(string from, string to)
 // Return all servers that would disconnect the server graph into
 // two or more disjoint graphs if ever one of them would go down
 // Hint: Use a variation of the depth-first search
-public string[] CriticalServers( ) ...
+public string[] CriticalServers(int i, bool[] visited) ...
+// this is just depth first search for now, we could probably modify afterwards
+{
+	int j;
 
+	visited[i] = true;
+	Console. WriteLine(i);
+
+	for (j = 0; j < NumServers; j++)
+		if (!visited[j] && E[i,j] > -1)
+			DepthFirstSearch(j, visited);
+}
 // 6 marks
 // Return the shortest path from one server to another
 // Hint: Use a variation of the breadth-first search
