@@ -199,17 +199,15 @@ public int ShortestPath(string from, string to)
 	int[] dist = new int[NumServers];
 
 	for (i = 0; i < NumVertices; i++)
-        visited[i] = false;               // Set all vertices as unvisited
+        	visited[i] = false;               // Set all vertices as unvisited
 
-    for (i = 0; i < NumVertices; i++)
-        if (!visited[i])                  // (Re)start with vertex i
-        {
-            BreadthFirstSearch(i, visited);
+	// Call BFS from server (i) to (k)
+            BreadthFirstSearch(i, k, visited);
             Console.WriteLine();
-        }
+        
 
 	// Modified version of BFS stores distance from one vertex to the other in array dist
-	private static bool BFS(int i, int k, bool[] visited)
+	private static bool BreadthFirstSearch(int i, int k, bool[] visited)
 	{
 		// declare the variables
 		int j;
