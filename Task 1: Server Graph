@@ -50,7 +50,15 @@ private int FindServer(string name)
 // 3 marks
 // Double the capacity of the server graph with the respect to web servers
 private void DoubleCapacity( ) {
-	MaxNumServers = MaxNumServers * 2;
+
+        // reference is from: https://www.dotnetperls.com/array-resize
+        WebServer[] newWebServers = new WebServer[2 * MaxNumServers];   //creates numWebServer 2x bigger than server graph
+        for(int i = 0; i < NumServers; i++)
+        {
+            newWebServers[i] = V[i];    // copies the original array
+        }
+        V = newWebServers;
+        MaxNumServers = MaxNumServers * 2;
 }
 
 // Create Add Vertex method
