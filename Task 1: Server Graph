@@ -52,10 +52,12 @@ private int FindServer(string name)
 private void DoubleCapacity( ) {
 
         // reference is from: https://www.dotnetperls.com/array-resize
+        //reference is from: https://stackoverflow.com/questions/15725840/copy-one-2d-array-to-another-2d-array
         WebServer[] newWebServers = new WebServer[2 * MaxNumServers];   //creates numWebServer 2x bigger than server graph
         for(int i = 0; i < NumServers; i++)
         {
             newWebServers[i] = V[i];    // copies the original array
+            double[,] edgeM = (double[,])E.Clone(); //copies the edge matrix
         }
         V = newWebServers;
         MaxNumServers = MaxNumServers * 2;
