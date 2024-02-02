@@ -10,225 +10,228 @@
 // Task 2: Web Graph
 
 // Create a class for Edge
-public class Edge<T>
-    {
-        public WebPage<T> AdjVertex { get; set; }
-        public int Cost { get; set; }
+public class Edge
+{
+	public WebPage AdjVertex { get; set; }
+	public int Cost { get; set; }
 
-        public Edge(Webpage<T> webpage, int cost = -1)
-        {
-            AdjVertex = webpage;
-            Cost = 1;
-        }
-    }
+	public Edge(WebPage webpage)
+	{
+		AdjVertex = webpage;
+		Cost = -1;
+	}
+}
 
 // 5 marks
 public class WebPage
 {
-public string Name {get; set;}
-public string Server {get; set;}
-public List<WebPage> E {get; set;}
-...
+	public string Name { get; set; }
+	public string Server { get; set; }
+	public List<WebPage> E { get; set; }
+
 
 // Constructor for Web page
-public WebPage(string name, string host) {
-	Name = name;
-	Server = host;
-	// Should we keep this?
-	Visited = false;
-	E = new List<WebPage>();
-}
-
-// Find link method
-// Returns the index of the given adjacent vertex in E; otherwise returns -1
-// Time complexity: O(n) where n is the number of vertices
-public int FindLink(string name) {
-	int i;
-	for (i = 0; i < E.Count; i++)
+public WebPage(string name, string host)
 	{
-		if (E[i].AdjVertex.Name.Equals(name))
-			return i;
+		Name = name;
+		Server = host;
+		E = new List<WebPage>();
 	}
-	return -1;
-}
 
-...
+	// Find link method
+	// Returns the index of the given adjacent vertex in E; otherwise returns -1
+	// Time complexity: O(n) where n is the number of vertices
+	public int FindLink(string name)
+	{
+		int i;
+		for (i = 0; i < E.Count; i++)
+		{
+			if (E[i].AdjVertex.Name.Equals(name))
+				return i;
+		}
+		return -1;
+	}
 }
 public class WebGraph
 {
-private List<WebPage> P;
-...
+	private List<WebPage> P;
 
-// 2 marks
-// Create an empty WebGraph
-public WebGraph( ) {
-	V = new List<WebPage>();
-}
-
-// 2 marks
-// Return the index of the webpage with the given name; otherwise return -1
-private int FindPage(string name) {
-	int i;
-	for (i = 0; i < V.Count; i++)
+	// 2 marks
+	// Create an empty WebGraph
+	public WebGraph()
 	{
-		if (V[i].Name.Equals(name))
-			return i;
+		V = new List<WebPage>();
 	}
-	return -1;
-}
 
-// 4 marks
-// Add a webpage with the given name and store it on the host server
-// Return true if successful; otherwise return false
-public bool AddPage(string name, string host, ServerGraph S)
-    {
-        if (FindPage(name) == -1)
-        {
-            WebPage<P> page = new WebPage<P>(name);
-            V.Add(page);
-            return true;
-        }
-            return false;  
-    }
-
-// 8 marks
-// Remove the webpage with the given name, including the hyperlinks
-// from and to the webpage
-// Return true if successful; otherwise return false
-public bool RemovePage (string name, ServerGraph S) {
-	int i, j, k;
-	if ((i = FindPage(name)) > -1)
+	// 2 marks
+	// Return the index of the webpage with the given name; otherwise return -1
+	private int FindPage(string name)
 	{
-		for (j = 0; j < V.Count; j++)
+		int i;
+		for (i = 0; i < V.Count; i++)
 		{
-			for (k = 0; k < V[j].E.Count; k++)
-				if (V[j].E[k].AdjVertex.Name.Equals(name)) // Incident edge
-				{
-					V[j].E.RemoveAt(k);
-					break; // Since there are no duplicate edges
-				}
+			if (V[i].Name.Equals(name))
+				return i;
 		}
-		V.RemoveAt(i);
+		return -1;
 	}
 
-	// Remove webpage from the list of webpages of host server
-	// TO COMPLETE!!!
-
-	// Return true or false if operation is successful
-	// TO COMPLETE!!
-}
-
-// 3 marks
-// Add a hyperlink from one webpage to another
-// Return true if successful; otherwise return false
-public bool AddLink (string from, string to) 
-{
-	int i,j;
-	int k = 0;
-	Edge<T> e;
-
-	// Do the vertices exist?
-	if ((i = FindPage(from)) > -1 && (j = FindPage(to) > -1)
+	// 4 marks
+	// Add a webpage with the given name and store it on the host server
+	// Return true if successful; otherwise return false
+	public bool AddPage(string name, string host, ServerGraph S)
 	{
-		// Does the edge not already exist?
-		if (V[i].FindLink(to) == -1)
+		if (FindPage(name) == -1)
 		{
-			e = new Edge<T>(V[j], k);
-			V[i].E.Add(e);
+			WebPage<P> page = new WebPage<P>(name);
+			V.Add(page);
 			return true;
 		}
+		return false;
 	}
-	return false;
-}
 
-// 3 marks
-// Remove a hyperlink from one webpage to another
-// Return true if successful; otherwise return false
-public bool RemoveLink (string from, string to) {
-	int i, j;
-	if ((i = FindPage(from)) > -1 && (j = V[i].FindPage(to)) > -1)
+	// 8 marks
+	// Remove the webpage with the given name, including the hyperlinks
+	// from and to the webpage
+	// Return true if successful; otherwise return false
+	public bool RemovePage(string name, ServerGraph S)
 	{
-		V[i].E.RemoveAt(j);
-		return true;
+		int i, j, k;
+		if ((i = FindPage(name)) > -1)
+		{
+			for (j = 0; j < V.Count; j++)
+			{
+				for (k = 0; k < V[j].E.Count; k++)
+					if (V[j].E[k].AdjVertex.Name.Equals(name)) // Incident edge
+					{
+						V[j].E.RemoveAt(k);
+						break; // Since there are no duplicate edges
+					}
+			}
+			V.RemoveAt(i);
+		}
+
+		// Remove webpage from the list of webpages of host server
+		// TO COMPLETE!!!
+
+		// Return true or false if operation is successful
+		// TO COMPLETE!!
 	}
-	return false;
-}
 
-// 6 marks
-// Return the average length of the shortest paths from the webpage with
-// given name to each of its hyperlinks
-// Hint: Use the method ShortestPath in the class ServerGraph
+	// 3 marks
+	// Add a hyperlink from one webpage to another
+	// Return true if successful; otherwise return false
+	public bool AddLink(string from, string to)
+	{
+		int i, j;
+		int k = 0;
+		Edge<T> e;
 
-///////////////////////////
-//note: this isn't how BP recommended us to do it --> will change the AvgShortestPaths afterwards
-//////////////////////////
-public float AvgShortestPaths(string name, ServerGraph S, int v, int[] distance, int[] pred, int destination)
-    {
-        //reference for bfs is from: https://www.geeksforgeeks.org/shortest-path-unweighted-graph/
-        bool[] visited = new bool[v];   //checks in vertex is reached at least once
-        
-        for (int i = 0; i < v; i++)
-        {
-            visited[i] = false;
-            distance[i] = int.MaxValue;
-            pred[i] = -1;
-        }
+		// Do the vertices exist?
+		if ((i = FindPage(from)) > -1 && (j = FindPage(to) > -1)
+		{
+			// Does the edge not already exist?
+			if (V[i].FindLink(to) == -1)
+			{
+				e = new Edge<T>(V[j], k);
+				V[i].E.Add(e);
+				return true;
+			}
+		}
+		return false;
+	}
 
-        visited[S] = true;
-        distance[S] = 0;
-        P.Add(S);
+	// 3 marks
+	// Remove a hyperlink from one webpage to another
+	// Return true if successful; otherwise return false
+	public bool RemoveLink(string from, string to)
+	{
+		int i, j;
+		if ((i = FindPage(from)) > -1 && (j = V[i].FindPage(to)) > -1)
+		{
+			V[i].E.RemoveAt(j);
+			return true;
+		}
+		return false;
+	}
 
-        // the breadth first search
-        while (P.Count != 0)
-        {
-            int a = P[0];
-            P.RemoveAt(0);
+	// 6 marks
+	// Return the average length of the shortest paths from the webpage with
+	// given name to each of its hyperlinks
+	// Hint: Use the method ShortestPath in the class ServerGraph
 
-            for (int i = 0; i < S[a].Count; i++)
-            {
-                if (visited[S[a][i]] == false)
-                {
-                    visited[S[a][i]] = true;
-                    distance[(int)S[a][i]] = distance[a] + 1;
-                    pred[S[a][i]] = a;
-                    P.Add((int)S[a][i]);
+	///////////////////////////
+	//note: this isn't how BP recommended us to do it --> will change the AvgShortestPaths afterwards
+	//////////////////////////
+	public float AvgShortestPaths(string name, ServerGraph S, int v, int[] distance, int[] pred, int destination)
+	{
+		//reference for bfs is from: https://www.geeksforgeeks.org/shortest-path-unweighted-graph/
+		bool[] visited = new bool[v];   //checks in vertex is reached at least once
 
-                    if (S[a][i] == destination)
-                        return 1;
-                }
-            }
-        }
-        return -1;
-        
+		for (int i = 0; i < v; i++)
+		{
+			visited[i] = false;
+			distance[i] = int.MaxValue;
+			pred[i] = -1;
+		}
 
-// PrintPages
-// Prints out all vertices of a graph
-// Time complexity: O(n)
-// To be called inside the PrintGraph method
-public void PrintPages()
-{
-	for (int i = 0; i < V.Count; i++)
-		Console.WriteLine(V[i].Name);
-	Console.ReadLine();
-}
+		visited[S] = true;
+		distance[S] = 0;
+		P.Add(S);
 
-// PrintLinks
-// Prints out all edges of the graph
-// Time complexity: O(m)
-// To be called inside the PrintGraph method
-public void PrintLinks()
-{
-	int i, j;
-	for (i = 0; i < V.Count; i++)
-		for (j = 0; j < V[i].E.Count; j++)
-			Console.WriteLine("(" + V[i].Name + "," + V[i].E[j].AdjVertex.Name + ")");
-    Console.ReadLine();
-}
+		// the breadth first search
+		while (P.Count != 0)
+		{
+			int a = P[0];
+			P.RemoveAt(0);
 
-// 3 marks
-// Print the name and hyperlinks of each webpage
-public void PrintGraph( ) {
-	PrintPages();
-	PrintLinks();
-}
+			for (int i = 0; i < S[a].Count; i++)
+			{
+				if (visited[S[a][i]] == false)
+				{
+					visited[S[a][i]] = true;
+					distance[(int)S[a][i]] = distance[a] + 1;
+					pred[S[a][i]] = a;
+					P.Add((int)S[a][i]);
+
+					if (S[a][i] == destination)
+						return 1;
+				}
+			}
+		}
+		return -1;
+
+
+		// PrintPages
+		// Prints out all vertices of a graph
+		// Time complexity: O(n)
+		// To be called inside the PrintGraph method
+		public void PrintPages()
+		{
+			for (int i = 0; i < V.Count; i++)
+				Console.WriteLine(V[i].Name);
+			Console.ReadLine();
+		}
+
+		// PrintLinks
+		// Prints out all edges of the graph
+		// Time complexity: O(m)
+		// To be called inside the PrintGraph method
+		public void PrintLinks()
+		{
+			int i, j;
+			for (i = 0; i < V.Count; i++)
+				for (j = 0; j < V[i].E.Count; j++)
+					Console.WriteLine("(" + V[i].Name + "," + V[i].E[j].AdjVertex.Name + ")");
+			Console.ReadLine();
+		}
+
+		// 3 marks
+		// Print the name and hyperlinks of each webpage
+		public void PrintGraph()
+		{
+			PrintPages();
+			PrintLinks();
+		}
+	}
 }
