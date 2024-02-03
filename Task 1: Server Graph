@@ -57,9 +57,11 @@ private void DoubleCapacity( ) {
         for(int i = 0; i < NumServers; i++)
         {
             newWebServers[i] = V[i];    // copies the original array
-            double[,] edgeM = (double[,])E.Clone(); //copies the edge matrix
         }
+        bool[,] edgeM = (bool[,])E.Clone(); //copies the edge matrix
+
         V = newWebServers;
+        E = edgeM;
         MaxNumServers = MaxNumServers * 2;
 }
 
