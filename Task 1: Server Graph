@@ -9,197 +9,191 @@
 
 // Task 1: Server Graph
 
+namespace Graphs { 
 public class ServerGraph
 {
-// 3 marks
-private class WebServer
-{
-public string Name;
-public List<WebPage> P;
-...
-}
-private WebServer[] V {set; get; } 
-private bool[,] E {set; get; } 
-private int NumServers {set; get; } 
-private int MaxNumServers {set; get; } 
-...
+	// 3 marks
+	private class WebServer
+	{
+		public string Name;
+		public List<WebPage> P;
+
+	}
+
+	private WebServer[] V { set; get; }
+	private bool[,] E { set; get; }
+	private int NumServers { set; get; }
+	private int MaxNumServers { set; get; } 
+
 
 // 2 marks
 // Create an empty server graph
-public ServerGraph(int maxNumServers) 
- {
-	NumServers= 0;
-        MaxNumServers = maxNumServers;
-        V = new WebServer[maxNumServers];
-        E = new bool[maxNumServers, maxNumServers];
-} 
-
-// 2 marks
-// Return the index of the server with the given name; otherwise return -1
-private int FindServer(string name) 
-{
-    int i;
-    for (i = 0; i < NumServers; i++)
-    {  
-        if (V[i].Equals(name))
-            return i;
-    }
-    return -1;
-}
-
-// 3 marks
-// Double the capacity of the server graph with the respect to web servers
-private void DoubleCapacity( ) {
-
-        // reference is from: https://www.dotnetperls.com/array-resize
-        //reference is from: https://stackoverflow.com/questions/15725840/copy-one-2d-array-to-another-2d-array
-        WebServer[] newWebServers = new WebServer[2 * MaxNumServers];   //creates numWebServer 2x bigger than server graph
-        for(int i = 0; i < NumServers; i++)
-        {
-            newWebServers[i] = V[i];    // copies the original array
-        }
-        bool[,] edgeM = (bool[,])E.Clone(); //copies the edge matrix
-
-        V = newWebServers;
-        E = edgeM;
-        MaxNumServers = MaxNumServers * 2;
-}
-
-// Create Add Vertex method
-// To be called inside Add Server method
-public bool AddVertex(T name)
-{
-	int i;
-	if (NumServers < MaxNumServers && FindServer(name) == -1)
+public ServerGraph(int maxNumServers)
 	{
-		V[NumServers] = name;
-		for (i = 0; i <= NumServers; i++)
-		{
-			E[i, NumServers] = -1;
-			E[NumServers, i] = -1;
-		}
-		NumServers++;
-		return true;
+		NumServers = 0;
+		MaxNumServers = maxNumServers;
+		V = new WebServer[maxNumServers];
+		E = new bool[maxNumServers, maxNumServers];
 	}
 
-	return false;
-}
-
-// 3 marks
-// Add a server with the given name and connect it to the other server
-// Return true if successful; otherwise return false
-public bool AddServer(string name, string other) {
-	bool vertexAdded = AddVertex(name);
-	if (VertexAdded == true)
+	// 2 marks
+	// Return the index of the server with the given name; otherwise return -1
+	private int FindServer(string name)
 	{
-		bool connectionAdded = AddConnection(name, other);
-		if (connectionAdded == true)
+		int i;
+		for (i = 0; i < NumServers; i++)
+		{
+			if (V[i].Equals(name))
+				return i;
+		}
+		return -1;
+	}
+
+	// 3 marks
+	// Double the capacity of the server graph with the respect to web servers
+	private void DoubleCapacity()
+	{
+
+		// reference is from: https://www.dotnetperls.com/array-resize
+		//reference is from: https://stackoverflow.com/questions/15725840/copy-one-2d-array-to-another-2d-array
+		WebServer[] newWebServers = new WebServer[2 * MaxNumServers];   //creates numWebServer 2x bigger than server graph
+		for (int i = 0; i < NumServers; i++)
+		{
+			newWebServers[i] = V[i];    // copies the original array
+			double[,] edgeM = (double[,])E.Clone(); //copies the edge matrix
+		}
+		V = newWebServers;
+		MaxNumServers = MaxNumServers * 2;
+	}
+
+	// Create Add Vertex method
+	// To be called inside Add Server method
+	public bool AddVertex(string name)
+	{
+		int i;
+		if (NumServers < MaxNumServers && FindServer(name) == -1)
+		{
+			V[NumServers] = name;
+			for (i = 0; i <= NumServers; i++)
+			{
+				E[i, NumServers] = false;
+				E[NumServers, i] = false;
+			}
+			NumServers++;
 			return true;
-		else
-			return false;
-	}
-}
-
-// 3 marks
-// Add a webpage to the server with the given name
-// Return true if successful; otherwise return false
-public bool AddWebPage(WebPage w, string name) 
- {
-        //have a list for webpages to be stored
-        //List<WebPage> P = new List<WebPage>(w);  //idk if w should be in brackets https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.add?view=net-8.0
-        //bool WebPageAdded = P.Any(); //Any checks if list contains an element https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.any?view=net-8.0&redirectedfrom=MSDN#overloads
- 
-        //P.Add(new WebPage(name));
-
-        //if (WebPageAdded == true)
-            //return true;
-        //else
-            //return false;
-    }
-
-// 4 marks
-// Remove the server with the given name by assigning its connections
-// and webpages to the other server
-// Return true if successful; otherwise return false
-public bool RemoveServer(string name, string other)
-{
-	int i, j;
-	if ((i = FindServer(name)) > -1)
-	{
-		NumServers--;
-		V[i] = V[NumServers];
-		for (j = NumServers; j >= 0; j--)
-		{
-			E[j, i] = E[j, NumServers];
-			E[i, j] = E[NumServers, j];
-			return true;	
 		}
-	return false;
-	}
-}
 
-// 3 marks (Bonus)
-// Remove the webpage from the server with the given name
-// Return true if successful; otherwise return false
-public bool RemoveWebPage(string webpage, string name) ...
+		return false;
+	}
+
+	// 3 marks
+	// Add a server with the given name and connect it to the other server
+	// Return true if successful; otherwise return false
+	public bool AddServer(string name, string other)
+	{
+		bool vertexAdded = AddVertex(name);
+		if (VertexAdded == true)
+		{
+			bool connectionAdded = AddConnection(name, other);
+			if (connectionAdded == true)
+				return true;
+			else
+				return false;
+		}
+	}
+
+	// 3 marks
+	// Add a webpage to the server with the given name
+	// Return true if successful; otherwise return false
+	public bool AddWebPage(WebPage w, string name)
+	{
+		//have a list for webpages to be stored
+		//List<WebPage> P = new List<WebPage>(w);  //idk if w should be in brackets https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.add?view=net-8.0
+		//bool WebPageAdded = P.Any(); //Any checks if list contains an element https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.any?view=net-8.0&redirectedfrom=MSDN#overloads
+
+		//P.Add(new WebPage(name));
+
+		//if (WebPageAdded == true)
+		//return true;
+		//else
+		//return false;
+	}
+
+	// 4 marks
+	// Remove the server with the given name by assigning its connections
+	// and webpages to the other server
+	// Return true if successful; otherwise return false
+	public bool RemoveServer(string name, string other)
+	{
+		int i, j;
+		if ((i = FindServer(name)) > -1)
+		{
+			NumServers--;
+			V[i] = V[NumServers];
+			for (j = NumServers; j >= 0; j--)
+			{
+				E[j, i] = E[j, NumServers];
+				E[i, j] = E[NumServers, j];
+				return true;
+			}
+			return false;
+		}
+	}
+
+	// 3 marks (Bonus)
+	// Remove the webpage from the server with the given name
+	// Return true if successful; otherwise return false
+	public bool RemoveWebPage(string webpage, string name)
+    {
+
+    }
 
 // 3 marks
 // Add a connection from one server to another
 // Return true if successful; otherwise return false
 // Note that each server is connected to at least one other server
 public bool AddConnection(string from, string to)
-{
-	int i, j;
-	if ((i = FindServer(from)) > -1 && (j = FindServer(to)) > -1)
-		if (E[i, j] == -1)
-			E[i, j] = 1;
-			return true;
-
-	return false;
-}
-
-// 10 marks
-// Return all servers that would disconnect the server graph into
-// two or more disjoint graphs if ever one of them would go down
-// Hint: Use a variation of the depth-first search
-public void DepthFirstSearch()
-{
-	int i;
-	bool[] visited = new bool[NumServers];
-
-	for (i=0; i < NumServers; i++)
-		visited[i] = false;
-	for (i = 0; i < NumServers; i++)
-		if (!visited[i])
-		{
-			DepthFirstSearch(i, visited);
-			Console.WriteLine();
-		}
-)
-public string[] CriticalServers(int i, bool[] visited) ...
-// this is just depth first search for now, we could probably modify afterwards
-{
-	for (int i=1; i <= V; i++)
 	{
-		int components = 0;
-		int [] visited = new int[V+1];
-		for (int j = 1; j <= V; j++)
+		int i, j;
+		if ((i = FindServer(from)) > -1 && (j = FindServer(to)) > -1)
+			if (E[i, j] == -1)
+				E[i, j] = 1;
+		return true;
+
+		return false;
+	}
+
+		// 10 marks
+		// Return all servers that would disconnect the server graph into
+		// two or more disjoint graphs if ever one of them would go down
+		// Hint: Use a variation of the depth-first search
+		// public string[] CriticalServers(int i, bool[] visited)
+
+public string[] CriticalServers(int i, bool[] visited)
+	// this is just depth first search for now, we could probably modify afterwards
+	{
+		for (int i=1; i <= V; i++)
 		{
-			if (j != i)
+			int components = 0;
+			int[] visited = new int[V + 1];
+			for (int j = 1; j <= V; j++)
 			{
-				if (vis[j] == 0)
+				if (j != i)
 				{
-					components++;
-					DepthFirstSearch();
-				}
-			}
-		}
-		if (components > 1)
-		{
-			Console.WriteLine(i);
+					if (vis[j] == 0)
+					{
+						components++;
+						DepthFirstSearch();
 		}
 	}
-}
+			}
+			if (components > 1)
+	{
+		Console.WriteLine(i);
+	}
+		}
+	}
+	
 
 // 6 marks
 // Return the shortest path from one server to another
@@ -209,14 +203,14 @@ public int ShortestPath(string from, string to)
 	// declare variables
 	int i;
 	int k;
-	
+
 	// get index of the from server
 	for (x = 0; x < V.GetLength(); x++)
 	{
 		if (V[x] == from)
 			i = x;
 	}
-	
+
 	// get index of the from server
 	for (x = 0; x < V.GetLength(); x++)
 	{
@@ -229,12 +223,12 @@ public int ShortestPath(string from, string to)
 	int[] dist = new int[NumServers];
 
 	for (i = 0; i < NumVertices; i++)
-        	visited[i] = false;               // Set all vertices as unvisited
+		visited[i] = false;               // Set all vertices as unvisited
 
 	// Call BFS from server (i) to (k)
-            BreadthFirstSearch(i, k, visited);
-            Console.WriteLine();
-        
+	BreadthFirstSearch(i, k, visited);
+	Console.WriteLine();
+
 
 	// Modified version of BFS stores distance from one vertex to the other in array dist
 	private static bool BreadthFirstSearch(int i, int k, bool[] visited)
@@ -243,24 +237,24 @@ public int ShortestPath(string from, string to)
 		int j;
 
 		Queue<int> Q = new Queue<int>();
-		Q.Enqueue(i); 		//  Mark vertex as visited when placed in the queue
+		Q.Enqueue(i);       //  Mark vertex as visited when placed in the queue
 		visited[i] = true;
 
 		while (Q.Count != 0)
 		{
-			i = Q.Dequeue();		
+			i = Q.Dequeue();
 
-			for (j = i; j < NumServers; j++)	// Enqueue unvisited adjacent vertices
+			for (j = i; j < NumServers; j++)    // Enqueue unvisited adjacent vertices
 				if (!visited[j] && E[i, j] > -1)
 				{
 					// Distance of i is equal to the distance of the parent + 1
 					dist[j] = dist[j - 1] + 1;
 
 					// if j != k then execute the following two lines
-					if (j != k )
+					if (j != k)
 					{
 						Q.Enqueue(j);
-						visisted[j] = true;		// Mark vertex as visited
+						visisted[j] = true;     // Mark vertex as visited
 					}
 					else
 					{
@@ -299,9 +293,10 @@ public void PrintConnections()
 // MISSING PRINT WEBPAGES!!
 ////////////////////////////////
 
-public void PrintGraph( ) 
+public void PrintGraph()
 {
 	PrintServers();
 	PrintConnections();
+}
 }
 }
