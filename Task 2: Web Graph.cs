@@ -179,27 +179,29 @@ namespace Graphs {
 		// Hint: Use the method ShortestPath in the class ServerGraph
 
         //idk what this is, sorry
-        public float AvgShortestPaths(string name, ServerGraph S, int v, int[] distance, int[] pred, int destination)
+        public float AvgShortestPaths(string name, ServerGraph S)
         {
-            int nameOfLink = FindLink(name); // setting variable to get the index of the name of FindLink
-            int averageShortPath;
+            int [] nameOfLink = FindLink(name); // setting variable to get the array of the index of the name of FindLink
+            int averageShortPath = 0; // creating a variable and setting it to 0
 
-            destination = S.ShortestPath(shortestPath(v, pred, distance)); //call the Method in ServerGraph for the ShortestPath and set it to destination
+            
+            int[] hyperLinks = E.Length; //count the amount of hyperlinks in the list
+            if(E.Length = 0) //if no hyperlink exists, return false. This is so that when calculating averageShorPath it will not have an error
+            {
+                return -1;
+            }
 
-            pred = new int[S.NumServers]; // initializing pred array with NumServers
-            distance= new int[S.NumServers]; // initializing distance array with NumServers
-
-            int[] hyperLinks = E.count; //count the amount of hyperlinks in the list
-
-           if(destination <= 0) //if destination does not exist, return averageShortPath to be false
+           if(S.ShortestPath(dist) <= 0) //if destination does not exist, return averageShortPath to be false
             {
                 return -1;
             }
            else
             {
-                averageShortPath = destination / hyperLinks; // get all of the hyperlink's path and divide it with the amount of list for average path  
-                return averageShortPath;
+                int destination = S.ShortestPath(nameOfLink); //call the Method in ServerGraph for the ShortestPath and set it to name of the hyperlink
+                averageShortPath = S.ShortestPath(dist) / hyperLinks; // get all of the hyperlink's path and divide it with the amount of list for average path  
             }
+
+            return averageShortPath;
         }
 
 
