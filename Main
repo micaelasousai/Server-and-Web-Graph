@@ -20,27 +20,31 @@ public static class Assignment1
 		int i, j;
 
 		// Instantiate a server graph and a web graph.
-		ServerGraph<char> S = new ServerGraph<char>(7);
-		WebGraph<char> W = new WebGraph<char>();
+		ServerGraph S = new ServerGraph("server0");
+		WebGraph W = new WebGraph();
 
 		// Add a number of servers.
-		// Use a for loop to add server to the server graph
-		for (i = 0; i < 7; i++)
-			S.AddServer((char)(i + 'a'));
+		S.AddServer("server1", "server0");
+		S.AddServer("server2", "server0");
+		S.AddServer("server3", "server1");
+		S.AddServer("server4", "server1");
+		S.AddServer("server5", "server0");
+		S.AddServer("server6", "server3");
 
 		// Print all the servers
 		S.PrintServers();
+		S.PrintConnections();
 
 		// Add additional connections between servers.
 		// Use two for loop to get the 2 servers to be connected
-		for (i = 0; i < 7; i += 2)
-			for (j = 0; j < 7; j += 3)
-			{
-				S.AddConnection((char)(i + 'a'), (char)(j + 'a'));
-			}
+		//for (i = 0; i < 7; i += 2)
+		//	for (j = 0; j < 7; j += 3)
+		//	{
+		//		S.AddConnection((char)(i + 'a'), (char)(j + 'a'));
+		//	}
 
-		H.PrintConnections();
-		Console.ReadKey();
+		//H.PrintConnections();
+		//Console.ReadKey();
 
 		// Add a number of webpages to various servers.
 
