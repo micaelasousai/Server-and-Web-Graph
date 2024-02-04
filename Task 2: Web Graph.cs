@@ -178,46 +178,29 @@ namespace Graphs {
 		// given name to each of its hyperlinks
 		// Hint: Use the method ShortestPath in the class ServerGraph
 
-		///////////////////////////
-		//note: this isn't how BP recommended us to do it --> will change the AvgShortestPaths afterwards
-		//////////////////////////
-		//public float AvgShortestPaths(string name, ServerGraph S, int v, int[] distance, int[] pred, int destination)
-		//{
-		//	//reference for bfs is from: https://www.geeksforgeeks.org/shortest-path-unweighted-graph/
-		//	bool[] visited = new bool[v];   //checks in vertex is reached at least once
+        //idk what this is, sorry
+        public float AvgShortestPaths(string name, ServerGraph S, int v, int[] distance, int[] pred, int destination)
+        {
+            int nameOfLink = FindLink(name); // setting variable to get the index of the name of FindLink
+            int averageShortPath;
 
-		//	for (int i = 0; i < v; i++)
-		//	{
-		//		visited[i] = false;
-		//		distance[i] = int.MaxValue;
-		//		pred[i] = -1;
-		//	}
+            destination = S.ShortestPath(shortestPath(v, pred, distance)); //call the Method in ServerGraph for the ShortestPath and set it to destination
 
-		//	visited[S] = true;
-		//	distance[S] = 0;
-		//	P.Add(S);
+            pred = new int[S.NumServers]; // initializing pred array with NumServers
+            distance= new int[S.NumServers]; // initializing distance array with NumServers
 
-		//	// the breadth first search
-		//	while (P.Count != 0)
-		//	{
-		//		int a = P[0];
-		//		P.RemoveAt(0);
+            int[] hyperLinks = E.count; //count the amount of hyperlinks in the list
 
-		//		for (int i = 0; i < S[a].Count; i++)
-		//		{
-		//			if (visited[S[a][i]] == false)
-		//			{
-		//				visited[S[a][i]] = true;
-		//				distance[(int)S[a][i]] = distance[a] + 1;
-		//				pred[S[a][i]] = a;
-		//				P.Add((int)S[a][i]);
-
-		//				if (S[a][i] == destination)
-		//					return 1;
-		//			}
-		//		}
-		//	}
-		//	return -1;
+           if(destination <= 0) //if destination does not exist, return averageShortPath to be false
+            {
+                return -1;
+            }
+           else
+            {
+                averageShortPath = destination / hyperLinks; // get all of the hyperlink's path and divide it with the amount of list for average path  
+                return averageShortPath;
+            }
+        }
 
 
 		// PrintPages
