@@ -178,10 +178,34 @@ namespace Graphs
 		// 3 marks (Bonus)
 		// Remove the webpage from the server with the given name
 		// Return true if successful; otherwise return false
-		//public bool RemoveWebPage(string webpage, string name)
-		//{
+		public bool RemoveWebPage(string webpage, string name)
+		{
+			// Find the index of the server passed
+			int i = FindServer(name);
 
-		//}
+			// If there is no valid index associated with the given name, print an error message and return false
+			if (i < 0)
+			{
+				Console.WriteLine("There is no server associated with the name provided. Enter a valid server name to add the webpage.");
+				return false;
+			}
+			else
+			{
+				// Find the index of the web page associated with the webpage name passed
+				int indexWebpage = V[i].P.FindIndex(page => page.Name == webpage);
+				if (indexWebpage != -1)
+                		{
+					// Remove the webpage from the list of webpages of the specified server
+					V[i].P.RemoveAt(indexWebpage);
+					return true;
+                		}
+				else
+				{
+					return false;
+
+				}
+			}
+		}
 
 		// 3 marks
 		// Add a connection from one server to another
