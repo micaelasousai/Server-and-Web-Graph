@@ -179,6 +179,11 @@ namespace Graphs
 				Console.WriteLine("You cannot the last server in the server graph. There should be at least one server in the graph.");
 				return false;
 			}
+			else if (CriticalServers.Contains(name))
+			{
+    				Console.WriteLine("WARNING: Critical Server; cannot be removed.");
+    				return false;
+			}
 			else
 			{
 				if ((i = FindServer(name)) > -1)
@@ -261,47 +266,47 @@ namespace Graphs
 
 
 
-		//public string[] CriticalServers(int i, bool[] visited)
-		//{
-		//	//iterates over all vertices in graph; for each vertex i, remove the vertex
-		//	//and check whether graph remains connected
+		public string[] CriticalServers(int i, bool[] visited)
+		{
+			//iterates over all vertices in graph; for each vertex i, remove the vertex
+			//and check whether graph remains connected
 			
-		//	//array to store what this method will return
-		//	string[] strvis = new string[NumServers + 1];
+			//array to store what this method will return
+			string[] strvis = new string[NumServers + 1];
 
-		//	for (int k = 1; k <= NumServers; k++)
-		//	{
-		//		//keeps track of graph components
-		//		int components = 0;
+			for (int k = 1; k <= NumServers; k++)
+			{
+				//keeps track of graph components
+				int components = 0;
 
-		//		//keeps track of visited vertices
-		//		int[] vis = new int[NumServers + 1];
+				//keeps track of visited vertices
+				int[] vis = new int[NumServers + 1];
 
-		//		//iterates over graph after removing vertex k and associated edges
-		//		for (int j = 1; j <= NumServers; j++)
-		//		{
-		//			//if the 'j'th vertex is not visited it will form new component
-		//			if (j != k)
-		//			{
-		//				if (vis[j] == 0)
-		//				{
-		//					components++;
-		//					DepthFirstSearch(j, visited);
-		//				}
-		//			}
-		//		}
+				//iterates over graph after removing vertex k and associated edges
+				for (int j = 1; j <= NumServers; j++)
+				{
+					//if the 'j'th vertex is not visited it will form new component
+					if (j != k)
+					{
+						if (vis[j] == 0)
+						{
+							components++;
+							DepthFirstSearch(j, visited);
+						}
+					}
+				}
 
-		//		if (components > 1)
-		//		{
-		//			Console.WriteLine(k);
-		//		}
-		//		//converts integer array of critical indexes into strings to return to system
-		//		strvis[k] = vis[k].ToString();
+				if (components > 1)
+				{
+					Console.WriteLine(k);
+				}
+				//converts integer array of critical indexes into strings to return to system
+				strvis[k] = vis[k].ToString();
 
-		//	}
-		//	return strvis;
+			}
+			return strvis;
 
-		//}
+		}
 
 
 		// 6 marks
