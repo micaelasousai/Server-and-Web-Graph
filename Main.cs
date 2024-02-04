@@ -36,6 +36,7 @@ public static class Assignment1
 		S.PrintConnections();
 
 		// Add additional connections between servers.
+		
 		// Use two for loop to get the 2 servers to be connected
 		//for (i = 0; i < 7; i += 2)
 		//	for (j = 0; j < 7; j += 3)
@@ -47,6 +48,13 @@ public static class Assignment1
 		//Console.ReadKey();
 
 		// Add a number of webpages to various servers.
+		W.AddPage("webpage0", "server3", S);
+		W.AddPage("webpage1", "server5", S);
+		W.AddPage("webpage2", "server4", S);
+		W.AddPage("webpage3", "server3", S);
+		W.AddPage("webpage4", "server2", S);
+		W.AddPage("webpage5", "server2", S);
+		W.AddPage("webpage6", "server1", S);
 
 		// Add and remove hyperlinks between the webpages.
 
