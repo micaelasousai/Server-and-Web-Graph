@@ -198,11 +198,11 @@ namespace Graphs
 		public void DepthFirstSearch(int i, bool[] visited)
 		{
 			int j;
-			visited [i] = true;
+			visited[i] = true;
 			Console.WriteLine(i);
 
-			for (j = 0; j < NumServers; j++) 
-				if (!visited[j] && E[i,j] > -1)
+			for (j = 0; j < NumServers; j++)
+				if (!visited[j] && E[i, j] == true)
 					DepthFirstSearch(j, visited);
 		}
 
@@ -212,16 +212,16 @@ namespace Graphs
 		{
 			//iterates over all vertices in graph; for each vertex i, remove the vertex
 			//and check whether graph remains connected
-			for (int i = 1; i <= NumVertices; i++)
+			for (int i = 1; i <= NumServers; i++)
 			{
 				//keeps track of graph components
 				int components = 0;
 
 				//keeps track of visited vertices
-				int [] vis = new int[NumVertices + 1];
+				int[] vis = new int[NumServers + 1];
 
 				//iterates over graph after removing vertex i and associated edges
-				for (int j = 1; j <= NumVertices; j++)
+				for (int j = 1; j <= NumServers; j++)
 				{
 					//if the 'j'th vertex is not visited it will form new component
 					if (j != i)
@@ -240,7 +240,6 @@ namespace Graphs
 				}
 			}
 		}
-
 	
 
 
