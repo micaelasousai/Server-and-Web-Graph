@@ -126,23 +126,31 @@ namespace Graphs
 		// 3 marks
 		// Add a webpage to the server with the given name
 		// Return true if successful; otherwise return false
-		public bool AddWebPage(WebPage w, string name, string host) //note: added the string host to the AddWebPage
+		public bool AddWebPage(WebPage w, string name) //note: added the string host to the AddWebPage
 		{
-			//have a list for webpages to be stored
-			List<WebPage> P = new List<WebPage>();  //initializing the list of WebPage P https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.add?view=net-8.0
-			bool WebPageAdded = P.Any(); //Any() checks if list contains an element https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.any?view=net-8.0&redirectedfrom=MSDN#overloads
+			// Find the index of the server passed
+			int i = FindServer(name);
 
-			P.Add(w); //adding WebPage w to the list
-			P.Add(new WebPage(name, host)); //adding WebPage's name and host to the list
-
-			if (WebPageAdded == true) //checking if WebPage was added
-			{
-				return true;
-			}
-			else
-			{
+			// If there is no valid index associated with the given name, print an error message and return false
+			if (i < 0)
+            		{
+				Console.WriteLine("There is no server associated with the name provided. Enter a valid server name to add the webpage.");
 				return false;
-			}
+            		}
+			else
+            		{
+				// If there webpage has not been added already to the list of webpages, add it
+				if (V[i].P.Contains(w) == false)
+				{ 
+					V[i].P.Add(w); //adding WebPage w to the list
+					return true;   // return true if addition is successful
+				}
+				else
+				{
+					return false;  // return false if addition is unsuccessful
+				}
+            		}
+			
 		}
 
 		// 4 marks
