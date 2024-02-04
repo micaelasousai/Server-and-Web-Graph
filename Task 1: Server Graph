@@ -404,7 +404,7 @@ namespace Graphs
 		{
 			int i;
 			for (i = 0; i < NumServers; i++)
-				Console.WriteLine("Server: " + V[i]);
+				Console.WriteLine("Server: " + V[i].Name);
 		}
 
 		// Method to print all connections
