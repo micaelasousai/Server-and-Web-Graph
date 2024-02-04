@@ -267,7 +267,7 @@ namespace Graphs
 		//	//and check whether graph remains connected
 			
 		//	//array to store what this method will return
-		//	string[] strvis;
+		//	string[] strvis = new string[NumServers + 1];
 
 		//	for (int k = 1; k <= NumServers; k++)
 		//	{
