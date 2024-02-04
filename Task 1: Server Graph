@@ -173,17 +173,25 @@ namespace Graphs
 		public bool RemoveServer(string name, string other)
 		{
 			int i, j;
-			if ((i = FindServer(name)) > -1)
+			if (NumServers == 1)
 			{
-				NumServers--;
-				V[i] = V[NumServers];
-				for (j = NumServers; j >= 0; j--)
-				{
-					E[j, i] = E[j, NumServers];
-					E[i, j] = E[NumServers, j];
-					return true;
-				}
+				Console.WriteLine("You cannot the last server in the server graph. There should be at least one server in the graph.");
 				return false;
+			}
+			else
+			{
+				if ((i = FindServer(name)) > -1)
+				{
+					NumServers--;
+					V[i] = V[NumServers];
+					for (j = NumServers; j >= 0; j--)
+					{
+						E[j, i] = E[j, NumServers];
+						E[i, j] = E[NumServers, j];
+						return true;
+					}
+					return false;
+				}
 			}
 			return false;
 		}
