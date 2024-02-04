@@ -265,6 +265,9 @@ namespace Graphs
 				//keeps track of visited vertices
 				int[] vis = new int[NumServers + 1];
 
+				//array to store what this method will return
+				string[] strvis;
+
 				//iterates over graph after removing vertex k and associated edges
 				for (int j = 1; j <= NumServers; j++)
 				{
