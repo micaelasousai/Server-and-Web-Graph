@@ -50,7 +50,7 @@ namespace Graphs
 			int i;
 			for (i = 0; i < NumServers; i++)
 			{
-				if (V[i].Equals(name))
+				if (V[i].Name.Equals(name))
 					return i;
 			}
 			return -1;
