@@ -266,7 +266,7 @@ namespace Graphs
 				int[] vis = new int[NumServers + 1];
 
 				//array to store what this method will return
-				string[] strvis;
+				string[] strvis = new string[NumServers + 1];
 
 				//iterates over graph after removing vertex k and associated edges
 				for (int j = 1; j <= NumServers; j++)
