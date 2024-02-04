@@ -244,7 +244,7 @@ namespace Graphs
 		{
 			//iterates over all vertices in graph; for each vertex i, remove the vertex
 			//and check whether graph remains connected
-			for (int i = 1; i <= NumServers; i++)
+			for (int k = 1; k <= NumServers; k++)
 			{
 				//keeps track of graph components
 				int components = 0;
@@ -252,11 +252,11 @@ namespace Graphs
 				//keeps track of visited vertices
 				int[] vis = new int[NumServers + 1];
 
-				//iterates over graph after removing vertex i and associated edges
+				//iterates over graph after removing vertex k and associated edges
 				for (int j = 1; j <= NumServers; j++)
 				{
 					//if the 'j'th vertex is not visited it will form new component
-					if (j != i)
+					if (j != k)
 					{
 						if (vis[j] == 0)
 						{
@@ -268,9 +268,14 @@ namespace Graphs
 
 				if (components > 1)
 				{
-					Console.WriteLine(i);
+					Console.WriteLine(k);
 				}
+				//converts integer array of critical indexes into strings to return to system
+				strvis[k] = vis[k].ToString();
+				
 			}
+			return strvis;
+
 		}
 	
 
