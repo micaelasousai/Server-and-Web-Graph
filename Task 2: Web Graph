@@ -92,7 +92,7 @@ namespace Graphs {
 
 				// Connect it to server graph
 				// Call Method Add WebPage
-				S.AddWebPage(page, name);
+				S.AddWebPage(page, host);
 
 				return true;
 			}
@@ -118,14 +118,20 @@ namespace Graphs {
 						}
 				}
 				V.RemoveAt(i);
+
+				// Remove webpage from the list of webpages of host server
+				// Get the name of the server where the webpage is hosted using method findhost
+				string serverName = S.FindHost(name);
+				// Call method remove webpage from server graph class
+				S.RemoveWebPage(name, serverName);
+
+				// return true if removal is successful 
+				return true;
 			}
 
-			// Remove webpage from the list of webpages of host server
-			// TO COMPLETE!!!
-			// CALL METHOD REMOVE WEBPAGE
+			// Return false if removal is unsuccessful
+			return false;
 
-			// Return true or false if operation is successful
-			// TO COMPLETE!!
 		}
 
 		// 3 marks
@@ -214,37 +220,37 @@ namespace Graphs {
 		//	return -1;
 
 
-			// PrintPages
-			// Prints out all vertices of a graph
-			// Time complexity: O(n)
-			// To be called inside the PrintGraph method
-			public void PrintPages()
-			{
-				for (int i = 0; i < V.Count; i++)
-					Console.WriteLine(V[i].Name);
-				Console.ReadLine();
-			}
-
-			// PrintLinks
-			// Prints out all edges of the graph
-			// Time complexity: O(m)
-			// To be called inside the PrintGraph method
-			public void PrintLinks()
-			{
-				int i, j;
-				for (i = 0; i < V.Count; i++)
-					for (j = 0; j < V[i].E.Count; j++)
-						Console.WriteLine("(" + V[i].Name + "," + V[i].E[j].AdjVertex.Name + ")");
-				Console.ReadLine();
-			}
-
-			// 3 marks
-			// Print the name and hyperlinks of each webpage
-			public void PrintGraph()
-			{
-				PrintPages();
-				PrintLinks();
-			}
+		// PrintPages
+		// Prints out all vertices of a graph
+		// Time complexity: O(n)
+		// To be called inside the PrintGraph method
+		public void PrintPages()
+		{
+			for (int i = 0; i < V.Count; i++)
+				Console.WriteLine(V[i].Name);
+			Console.ReadLine();
 		}
+
+		// PrintLinks
+		// Prints out all edges of the graph
+		// Time complexity: O(m)
+		// To be called inside the PrintGraph method
+		public void PrintLinks()
+		{
+			int i, j;
+			for (i = 0; i < V.Count; i++)
+				for (j = 0; j < V[i].E.Count; j++)
+					Console.WriteLine("(" + V[i].Name + "," + V[i].E[j].AdjVertex.Name + ")");
+			Console.ReadLine();
+		}
+
+		// 3 marks
+		// Print the name and hyperlinks of each webpage
+		public void PrintGraph()
+		{
+			PrintPages();
+			PrintLinks();
+		}
+		
 	}
 }
