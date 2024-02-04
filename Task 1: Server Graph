@@ -56,6 +56,19 @@ namespace Graphs
 			return -1;
 		}
 
+		// Returns the name of the server that hosts a specific webpage
+		public string FindHost(string webpage)
+        	{
+			for (int x = 0; x < NumServers; x++)
+            		{
+				if (V[x].P.Any(page => page.Name == webpage))
+				{
+					return V[x].Name;
+                		}
+            		}
+			return "";
+		}
+
 		// 3 marks
 		// Double the capacity of the server graph with the respect to web servers
 		private void DoubleCapacity()
