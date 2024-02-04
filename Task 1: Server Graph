@@ -58,14 +58,14 @@ namespace Graphs
 
 		// Returns the name of the server that hosts a specific webpage
 		public string FindHost(string webpage)
-        	{
+        {
 			for (int x = 0; x < NumServers; x++)
-            		{
+            {
 				if (V[x].P.Any(page => page.Name == webpage))
 				{
 					return V[x].Name;
-                		}
-            		}
+                }
+            }
 			return "";
 		}
 
@@ -133,7 +133,10 @@ namespace Graphs
 				else
 					return false;
 			}
-			return false;
+			else
+			{
+				return false;
+			}
 		}
 
 		// 3 marks
@@ -141,18 +144,16 @@ namespace Graphs
 		// Return true if successful; otherwise return false
 		public bool AddWebPage(WebPage w, string name) //note: added the string host to the AddWebPage
 		{
-			// Find the index of the server passed
+
 			int i = FindServer(name);
 
-			// If there is no valid index associated with the given name, print an error message and return false
 			if (i < 0)
-            		{
+            {
 				Console.WriteLine("There is no server associated with the name provided. Enter a valid server name to add the webpage.");
 				return false;
-            		}
+            }
 			else
-            		{
-				// If there webpage has not been added already to the list of webpages, add it
+            {
 				if (V[i].P.Contains(w) == false)
 				{ 
 					V[i].P.Add(w); //adding WebPage w to the list
@@ -162,7 +163,7 @@ namespace Graphs
 				{
 					return false;  // return false if addition is unsuccessful
 				}
-            		}
+            }
 			
 		}
 
@@ -212,14 +213,13 @@ namespace Graphs
 			}
 			else
 			{
-				// Find the index of the web page associated with the webpage name passed
 				int indexWebpage = V[i].P.FindIndex(page => page.Name == webpage);
 				if (indexWebpage != -1)
-                		{
-					// Remove the webpage from the list of webpages of the specified server
+                {
+					// Do the remove
 					V[i].P.RemoveAt(indexWebpage);
 					return true;
-                		}
+                }
 				else
 				{
 					return false;
@@ -261,47 +261,47 @@ namespace Graphs
 
 
 
-		public string[] CriticalServers(int i, bool[] visited)
-		{
-			//iterates over all vertices in graph; for each vertex i, remove the vertex
-			//and check whether graph remains connected
-			for (int k = 1; k <= NumServers; k++)
-			{
-				//keeps track of graph components
-				int components = 0;
+		//public string[] CriticalServers(int i, bool[] visited)
+		//{
+		//	//iterates over all vertices in graph; for each vertex i, remove the vertex
+		//	//and check whether graph remains connected
+			
+		//	//array to store what this method will return
+		//	string[] strvis;
 
-				//keeps track of visited vertices
-				int[] vis = new int[NumServers + 1];
+		//	for (int k = 1; k <= NumServers; k++)
+		//	{
+		//		//keeps track of graph components
+		//		int components = 0;
 
-				//array to store what this method will return
-				string[] strvis = new string[NumServers + 1];
+		//		//keeps track of visited vertices
+		//		int[] vis = new int[NumServers + 1];
 
-				//iterates over graph after removing vertex k and associated edges
-				for (int j = 1; j <= NumServers; j++)
-				{
-					//if the 'j'th vertex is not visited it will form new component
-					if (j != k)
-					{
-						if (vis[j] == 0)
-						{
-							components++;
-							DepthFirstSearch(j, visited);
-						}
-					}
-				}
+		//		//iterates over graph after removing vertex k and associated edges
+		//		for (int j = 1; j <= NumServers; j++)
+		//		{
+		//			//if the 'j'th vertex is not visited it will form new component
+		//			if (j != k)
+		//			{
+		//				if (vis[j] == 0)
+		//				{
+		//					components++;
+		//					DepthFirstSearch(j, visited);
+		//				}
+		//			}
+		//		}
 
-				if (components > 1)
-				{
-					Console.WriteLine(k);
-				}
-				//converts integer array of critical indexes into strings to return to system
-				strvis[k] = vis[k].ToString();
-				
-			}
-			return strvis;
+		//		if (components > 1)
+		//		{
+		//			Console.WriteLine(k);
+		//		}
+		//		//converts integer array of critical indexes into strings to return to system
+		//		strvis[k] = vis[k].ToString();
 
-		}
-	
+		//	}
+		//	return strvis;
+
+		//}
 
 
 		// 6 marks
@@ -414,8 +414,8 @@ namespace Graphs
 			int i, j;
 			for (i = 0; i < NumServers; i++)
 				for (j = 0; j < NumServers; j++)
-					if (E[i, j] == true)
-						Console.WriteLine("Connection: (" + V[i] + "," + V[j] + "," + E[i, j] + ")");
+					if (E[i, j])
+						Console.WriteLine("Connection: (" + V[i].Name + "," + V[j].Name + "," + E[i, j] + ")");
 		}
 
 		// PrintWebPagesHosted
