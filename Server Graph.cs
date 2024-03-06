@@ -1,4 +1,11 @@
 // Server Graph
+
+// Program description:
+// This class is used to implement the Server Graph as an adjacency matrix. 
+// It represents a collection of Servers in a directed, unweighted graph.
+// Each vertex represents a web server and each undirected edge represents
+// connection between two servers
+
 namespace Graphs
 {
 	public class ServerGraph
