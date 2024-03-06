@@ -1,3 +1,13 @@
+// The Main
+
+// Program description:
+// The main program is used to test the multiple methods implemented by both the server graph and the web graph.
+// Each of the comments heads a separate test case. There are cases to instantiate a server and web graph, to test 
+// the case of adding a server with the empty string as its name, to add a number of servers, to print all servers 
+// and its connections, to test the CriticalServers implementation, to remove hyperlinks between two pages, to 
+// successfully remove servers, to return the shortest path between two vertices, to calculate the shortest path 
+// between hyperlinks of webpages, and to test the attempted removal of a server if it is the only one on the graph.
+
 using System;
 using Graphs;
 
