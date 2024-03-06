@@ -1,18 +1,31 @@
 // Server Graph
 namespace Graphs
-{ 
+{
 	public class ServerGraph
 	{
 		private class WebServer
 		{
 			public string Name;
 			public List<WebPage> P;
+
+			public WebServer()
+            {
+				Name = "";
+				P = new List<WebPage>();
+            }
+
+			public WebServer(string n)
+            {
+				Name = n;
+				P = new List<WebPage>();
+            }
 		}
 
-		private WebServer[] V { set; get; } 
+		private WebServer[] V { set; get; }
 		private bool[,] E { set; get; }
 		private int NumServers { set; get; }
 		private int MaxNumServers { set; get; }
+
 
 		// Create an empty server graph
 		// Parameter: name of the initial server in the graph
@@ -24,9 +37,9 @@ namespace Graphs
 			E = new bool[10, 10];
 
 			// Create an initial server for the graph
-			WebServer newVertex = new WebServer();
-			newVertex.Name = name;
-			V[NumServers] = newVertex;			
+			WebServer newVertex = new WebServer(name);
+			//newVertex.Name = name;
+			V[NumServers] = newVertex;
 			E[0, 0] = false;
 			NumServers++;
 		}
@@ -45,14 +58,14 @@ namespace Graphs
 
 		// Returns the name of the server that hosts a specific webpage
 		public string FindHost(string webpage)
-        {
+		{
 			for (int x = 0; x < NumServers; x++)
-            {
+			{
 				if (V[x].P.Any(page => page.Name == webpage))
 				{
 					return V[x].Name;
-                }
-            }
+				}
+			}
 			return "";
 		}
 
@@ -72,20 +85,28 @@ namespace Graphs
 			MaxNumServers = MaxNumServers * 2;
 		}
 
-		// Create Add Vertex method
-		// To be called inside Add Server method
-		public bool AddVertex(string name)
+		// Add a server with the given name and connect it to the other server
+		// Return true if successful; otherwise return false
+		public bool AddServer(string name, string other)
 		{
+			// Check that the name of the server cannot be the empty string
+			if (name == "")
+            {
+				Console.WriteLine("Provide a valid name for the server to be created.");
+				return false;
+            }
+
+			// If the name provided to create a new server is valid, continue
+
 			int i;
 
 			// If the number of servers is greater or equal than the maximum number of servers, call the method double capacity
 			if (NumServers >= MaxNumServers)
-            {
 				DoubleCapacity();
-            }
 
-			// Add new vertex if there is capacity and the server does not exist in the graph
-			if (NumServers < MaxNumServers && FindServer(name) == -1)
+			// Add new server if there is capacity and the server does not exist in the graph
+			// Also check that the server "other" passed as a parameter exists
+			if (NumServers < MaxNumServers && FindServer(name) == -1 && FindServer(other) != -1)
 			{
 				// Instantiate new object type webserver
 				WebServer newVertex = new WebServer();
@@ -98,30 +119,17 @@ namespace Graphs
 				}
 				// Increase the total number of servers by 1
 				NumServers++;
-				// When addition of new server is successful, return true
-				return true;
-			}
-			// When addition of new server is unsuccessful, return false
-			return false;
-		}
 
-		// Add a server with the given name and connect it to the other server
-		// Return true if successful; otherwise return false
-		public bool AddServer(string name, string other)
-		{
-			bool vertexAdded = AddVertex(name);
-			if (vertexAdded == true)
-			{
+				// Add connection from the new server to the other server passed
 				bool connectionAdded = AddConnection(name, other);
-				if (connectionAdded == true)
+
+				if (connectionAdded)
 					return true;
 				else
 					return false;
 			}
-			else
-			{
-				return false;
-			}
+
+			return false;
 		}
 
 		// Add a webpage to the server with the given name
@@ -132,14 +140,19 @@ namespace Graphs
 			int i = FindServer(name);
 
 			if (i < 0)
-            {
+			{
 				Console.WriteLine("There is no server associated with the name provided. Enter a valid server name to add the webpage.");
 				return false;
-            }
+			}
 			else
-            {
-				if (V[i].P.Contains(w) == false)
-				{ 
+			{
+				if (w == null)
+				{
+					Console.WriteLine("Error: WebPage object is null.");
+					return false;
+				}
+				else if (V[i].P.Contains(w) == false)
+				{
 					V[i].P.Add(w); //adding WebPage w to the list
 					return true;   // return true if addition is successful
 				}
@@ -147,8 +160,8 @@ namespace Graphs
 				{
 					return false;  // return false if addition is unsuccessful
 				}
-            }
-			
+			}
+
 		}
 
 		// Remove the server with the given name by assigning its connections
@@ -157,29 +170,42 @@ namespace Graphs
 		public bool RemoveServer(string name, string other)
 		{
 			int i, j;
+
 			if (NumServers == 1)
 			{
-				Console.WriteLine("You cannot the last server in the server graph. There should be at least one server in the graph.");
+				Console.WriteLine("You cannot remove the last server in the server graph. There should be at least one server in the graph.");
 				return false;
 			}
-			else if (CriticalServers.Contains(name))
+			else if ((i = FindServer(name)) == -1)
 			{
-    				Console.WriteLine("WARNING: Critical Server; cannot be removed.");
-    				return false;
+				Console.WriteLine("The server name provided does not exist in the graph, it is invalid.");
+				return false;
+			}
+			else if (CriticalServers().Contains(name))
+			{
+				Console.WriteLine("WARNING: Critical Server; cannot be removed.");
+				return false;
 			}
 			else
 			{
 				if ((i = FindServer(name)) > -1)
 				{
+
+					// transfer its webpages to the other server passed
+					for (int x = 0; x < V[i].P.Count; x++)
+					{
+						V[FindServer(other)].P.Add(V[i].P[x]);
+					}
+
 					NumServers--;
 					V[i] = V[NumServers];
 					for (j = NumServers; j >= 0; j--)
 					{
 						E[j, i] = E[j, NumServers];
 						E[i, j] = E[NumServers, j];
-						return true;
 					}
-					return false;
+
+					return true;
 				}
 			}
 			return false;
@@ -187,10 +213,13 @@ namespace Graphs
 
 		// Remove the webpage from the server with the given name
 		// Return true if successful; otherwise return false
-		public bool RemoveWebPage(string webpage, string name)
+		public bool RemoveWebPage(string webpage)
 		{
+			// Get the name of the server where the webpage is hosted using method findhost
+			string serverName = FindHost(webpage);
+
 			// Find the index of the server passed
-			int i = FindServer(name);
+			int i = FindServer(serverName);
 
 			// If there is no valid index associated with the given name, print an error message and return false
 			if (i < 0)
@@ -202,15 +231,14 @@ namespace Graphs
 			{
 				int indexWebpage = V[i].P.FindIndex(page => page.Name == webpage);
 				if (indexWebpage != -1)
-                {
+				{
 					// Do the remove
 					V[i].P.RemoveAt(indexWebpage);
 					return true;
-                }
+				}
 				else
 				{
 					return false;
-
 				}
 			}
 		}
@@ -225,6 +253,7 @@ namespace Graphs
 				if (E[i, j] == false)
 				{
 					E[i, j] = true;
+					E[j, i] = true;
 					return true;
 				}
 			return false;
@@ -237,55 +266,47 @@ namespace Graphs
 		{
 			int j;
 			visited[i] = true;
-			Console.WriteLine(i);
 
 			for (j = 0; j < NumServers; j++)
 				if (!visited[j] && E[i, j] == true)
 					DepthFirstSearch(j, visited);
 		}
 
-
-
-		public string[] CriticalServers(int i, bool[] visited)
+		public string[] CriticalServers()
 		{
-			//iterates over all vertices in graph; for each vertex i, remove the vertex
-			//and check whether graph remains connected
-			
-			//array to store what this method will return
-			string[] strvis = new string[NumServers + 1];
+			// Iterate through each server
+			// For a server:
+			//     Do a depth first search on the graph *without* that server to see if all servers are still accessible
+			//	   Mark one vertex as visited then do DFS
+			//	   If not a critical server, then all vertices should be marked as visited at the end of DFS
+			//     Don't actually remove the server from the graph.
+			//     When does a DFS process a server?
+			//     How do you indicate to DFS to not process a server?
 
-			for (int k = 1; k <= NumServers; k++)
+			string[] listOfCriticalServers = new string[NumServers];
+			int numCritical = 0;
+
+			for (int i = 0; i < NumServers; i++)
 			{
-				//keeps track of graph components
-				int components = 0;
-
-				//keeps track of visited vertices
-				int[] vis = new int[NumServers + 1];
-
-				//iterates over graph after removing vertex k and associated edges
-				for (int j = 1; j <= NumServers; j++)
+				bool[] visited = new bool[NumServers];
+				visited[i] = true;
+				DepthFirstSearch(i == 0 ? 1 : 0, visited);
+				bool critical = false;
+				for (int j = 0; j < NumServers; j++)
 				{
-					//if the 'j'th vertex is not visited it will form new component
-					if (j != k)
+					if (!visited[j])
 					{
-						if (vis[j] == 0)
-						{
-							components++;
-							DepthFirstSearch(j, visited);
-						}
+						critical = true;
+						j = NumServers;
 					}
 				}
-
-				if (components > 1)
+				if (critical)
 				{
-					Console.WriteLine(k);
+					listOfCriticalServers[numCritical] = V[i].Name;
+					numCritical++;
 				}
-				//converts integer array of critical indexes into strings to return to system
-				strvis[k] = vis[k].ToString();
-
 			}
-			return strvis;
-
+			return listOfCriticalServers;
 		}
 
 
@@ -335,7 +356,6 @@ namespace Graphs
 			{
 				// Call BFS from server "from" to server "to"
 				shortestPath = BreadthFirstSearch(fromIndex, toIndex, visited, dist);
-				Console.WriteLine();
 			}
 
 			return shortestPath;
@@ -412,12 +432,10 @@ namespace Graphs
 				// Print the webpages for each server V[i] stored in list P
 				for (int j = 0; j < V[i].P.Count; j++)
 					Console.WriteLine(V[i].P[j].Name + " hosted by " + V[i].Name);
-			Console.ReadLine();
 		}
 
 		// Print the name and connections of each server as well as
 		// the names of the webpages it hosts
-
 		public void PrintGraph()
 		{
 			PrintServers();
