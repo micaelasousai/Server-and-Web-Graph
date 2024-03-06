@@ -1,18 +1,8 @@
-// Name: Micaela Sousa (0722724), Rachel Lee (0696297), Boaz Chan (0686531)
-// Assignment 1
-
-// Program description:
-// TO COMPLETE!!!
-
-// Data dictionary: 
-// TO COMPLETE!!!
-
-// Task 1: Server Graph
+// Server Graph
 namespace Graphs
 { 
 	public class ServerGraph
 	{
-		// 3 marks
 		private class WebServer
 		{
 			public string Name;
@@ -24,8 +14,6 @@ namespace Graphs
 		private int NumServers { set; get; }
 		private int MaxNumServers { set; get; }
 
-
-		// 2 marks
 		// Create an empty server graph
 		// Parameter: name of the initial server in the graph
 		public ServerGraph(string name)
@@ -43,7 +31,6 @@ namespace Graphs
 			NumServers++;
 		}
 
-		// 2 marks
 		// Return the index of the server with the given name; otherwise return -1
 		private int FindServer(string name)
 		{
@@ -69,7 +56,6 @@ namespace Graphs
 			return "";
 		}
 
-		// 3 marks
 		// Double the capacity of the server graph with the respect to web servers
 		private void DoubleCapacity()
 		{
@@ -119,7 +105,6 @@ namespace Graphs
 			return false;
 		}
 
-		// 3 marks
 		// Add a server with the given name and connect it to the other server
 		// Return true if successful; otherwise return false
 		public bool AddServer(string name, string other)
@@ -139,7 +124,6 @@ namespace Graphs
 			}
 		}
 
-		// 3 marks
 		// Add a webpage to the server with the given name
 		// Return true if successful; otherwise return false
 		public bool AddWebPage(WebPage w, string name) //note: added the string host to the AddWebPage
@@ -167,7 +151,6 @@ namespace Graphs
 			
 		}
 
-		// 4 marks
 		// Remove the server with the given name by assigning its connections
 		// and webpages to the other server
 		// Return true if successful; otherwise return false
@@ -202,7 +185,6 @@ namespace Graphs
 			return false;
 		}
 
-		// 3 marks (Bonus)
 		// Remove the webpage from the server with the given name
 		// Return true if successful; otherwise return false
 		public bool RemoveWebPage(string webpage, string name)
@@ -233,7 +215,6 @@ namespace Graphs
 			}
 		}
 
-		// 3 marks
 		// Add a connection from one server to another
 		// Return true if successful; otherwise return false
 		// Note that each server is connected to at least one other server
@@ -249,7 +230,6 @@ namespace Graphs
 			return false;
 		}
 
-		// 10 marks
 		// Return all servers that would disconnect the server graph into
 		// two or more disjoint graphs if ever one of them would go down
 		// Hint: Use a variation of the depth-first search
@@ -309,7 +289,6 @@ namespace Graphs
 		}
 
 
-		// 6 marks
 		// Return the shortest path from one server to another
 		// Hint: Use a variation of the breadth-first search
 		public int ShortestPath(string from, string to)
@@ -436,7 +415,6 @@ namespace Graphs
 			Console.ReadLine();
 		}
 
-		// 4 marks
 		// Print the name and connections of each server as well as
 		// the names of the webpages it hosts
 
