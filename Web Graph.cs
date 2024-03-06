@@ -1,5 +1,9 @@
-
 // Web Graph
+
+// Program description:
+// This class implements the web graph as an expandable adjacency list.
+// It represents a collection of webpages in a directed, unweighted graph.
+// Each webpage has a unique name as well as the name of the server that hosts it.
 
 namespace Graphs
 {
