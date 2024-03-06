@@ -1,11 +1,3 @@
-// Name: Micaela Sousa (0722724), Rachel Lee (0696297), Boaz Chan (0686531)
-// Assignment 1
-
-// Program description:
-// TO COMPLETE!!!
-
-// Data dictionary: 
-// TO COMPLETE!!!
 
 // Task 2: Web Graph
 
@@ -25,7 +17,6 @@ namespace Graphs {
 		}
 	}
 
-	// 5 marks
 	public class WebPage
 	{
 		public string Name { get; set; }    // Vertex name (webpage name)
@@ -60,14 +51,12 @@ namespace Graphs {
 	{
 		private List<WebPage> V;
 
-		// 2 marks
 		// Create an empty WebGraph
 		public WebGraph()
 		{
 			V = new List<WebPage>();
 		}
 
-		// 2 marks
 		// Return the index of the webpage with the given name; otherwise return -1
 		private int FindPage(string name)
 		{
@@ -80,7 +69,6 @@ namespace Graphs {
 			return -1;
 		}
 
-		// 4 marks
 		// Add a webpage with the given name and store it on the host server
 		// Return true if successful; otherwise return false
 		public bool AddPage(string name, string host, ServerGraph S)
@@ -99,7 +87,6 @@ namespace Graphs {
 			return false;
 		}
 
-		// 8 marks
 		// Remove the webpage with the given name, including the hyperlinks
 		// from and to the webpage
 		// Return true if successful; otherwise return false
@@ -134,7 +121,6 @@ namespace Graphs {
 
 		}
 
-		// 3 marks
 		// Add a hyperlink from one webpage to another
 		// Return true if successful; otherwise return false
 		public bool AddLink(string from, string to)
@@ -159,7 +145,6 @@ namespace Graphs {
 			return false;
 		}
 
-		// 3 marks
 		// Remove a hyperlink from one webpage to another
 		// Return true if successful; otherwise return false
 		public bool RemoveLink(string from, string to)
@@ -173,7 +158,6 @@ namespace Graphs {
 			return false;
 		}
 
-		// 6 marks
 		// Return the average length of the shortest paths from the webpage with
 		// given name to each of its hyperlinks
 		// Hint: Use the method ShortestPath in the class ServerGraph
@@ -229,7 +213,6 @@ namespace Graphs {
 			Console.ReadLine();
 		}
 
-		// 3 marks
 		// Print the name and hyperlinks of each webpage
 		public void PrintGraph()
 		{
